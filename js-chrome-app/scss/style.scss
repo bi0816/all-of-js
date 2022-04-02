@@ -1,0 +1,169 @@
+$white: rgba(255,255,255,.7);
+$black: rgba(0,0,0,.7);
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  height: 100%;
+  min-width: 768px;
+
+  img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: -1;
+    width: 100%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.is-hide {
+  display: none;
+}
+
+.greeting {
+  padding: 15px;
+}
+
+.input-box {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+
+  &:before {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 1px;
+    background-color: $white;
+    transition: width .4s;
+    content: '';
+  }
+
+  &:hover:before {
+    width: 100%;
+    transition: width .4s;
+  }
+
+  .input {
+    display: block;
+    padding: 10px;
+    font-size: 15px;
+    color: #fff;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::placeholder {
+      color: $white;
+    }
+  }
+}
+
+.login-form {
+  padding: 15px;
+  font-size: 0;
+  line-height: normal;
+
+  .btn {
+    display: inline-block;
+    margin-left: 5px;
+    padding: 10px;
+    font-size: 15px;
+    color: $white;
+    transition: color .4s;
+    vertical-align: middle;
+
+    &:hover,
+    &:focus {
+      color: #fff;
+      transition: color .4s;
+    }
+  }
+}
+
+.clock {
+  font-size: 80px;
+  font-weight: bold;
+}
+
+.quotes {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 15px 15px 30px;
+  text-align: center;
+
+  .quote {
+    font-style: italic;
+    font-size: 15px;
+    line-height: 19px;
+    color: rgba(255,255,255,.5);
+  }
+}
+
+.todo-form {
+  margin-top: 10px;
+
+  input {
+    width: 300px;
+    padding: 10px;
+    font-size: 15px;
+    text-align: center;
+  }
+}
+
+.list-todo {
+  padding: 10px;
+
+  li {
+    font-size: 0;
+    line-height: normal;
+    text-align: center;
+
+    &:not(:first-child) {
+      margin-top: 10px;
+    }
+  }
+
+  span,
+  button {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  span {
+    font-size: 20px;
+    line-height: 20px;
+    color: $black;
+    font-weight: bold;
+  }
+
+  button {
+    margin-left: 5px;
+    font-size: 14px;
+    line-height: 20px;
+  }
+}
+
+.weather-box {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+
+  .city,
+  .weather {
+    display: block;
+    font-size: 13px;
+    line-height: 17px;
+    font-style: italic;
+    color: #fff;
+  }
+}

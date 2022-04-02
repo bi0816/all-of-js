@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Momentum</title>
+  <link rel="stylesheet" href="./css/reset.min.css">
+  <link rel="stylesheet" href="./css/style.min.css">
+</head>
+<body>
+<div class="wrap">
+  <span id="clock" class="clock"></span>
+  <h1 id="greeting" class="greeting is-hide"></h1>
+  <form id="loginForm" class="login-form is-hide">
+  <fieldset>
+    <legend>로그인 폼</legend>
+    <span class="input-box">
+      <input type="text" class="input" placeholder="이름을 입력해주세요." maxlength="15" required>
+    </span>
+    <button type="submit" class="btn">Log in</button>
+  </fieldset>
+  </form>
+
+  <form id="todoForm" class="todo-form">
+    <span class="input-box">
+      <input type="text" class="input" placeholder="오늘 할 일을 적어주세요." required>
+    </span>
+  </form>
+  <ul id="todoList" class="list-todo"></ul>
+
+  <div id="quotes" class="quotes">
+    <p class="quote"></p>
+    <span class="author"></span>
+  </div>
+
+  <div id="weatherBox" class="weather-box">
+    <span class="city"></span>
+    <span class="weather"></span>
+  </div>
+</div>
+
+<!-- Script -->
+<script src="./js/greetings.js"></script>
+<script src="./js/clock.js"></script>
+<script src="./js/quotes.js"></script>
+<script src="./js/background.js"></script>
+<script src="./js/todo.js"></script>
+<script src="./js/weather.js"></script>
+</body>
+</html>
