@@ -1,0 +1,106 @@
+html, body {
+  padding: 0;
+  margin: 0;
+}
+.wrap {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: beige;
+}
+
+.title {
+  margin: 0 0 30px;
+}
+
+.sub-title {
+  margin: 0 0 5px;
+}
+
+.desc {
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 17px;
+}
+
+.is-active {
+  display:block;
+}
+
+.is-hide {
+  display:none;
+}
+
+.input-group {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: rgba(0,0,0,.3);
+  width: 150px;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.input-box {
+  display: block;
+  margin-top: 5px;
+}
+.input-box:first-child {
+  margin-top: 0;
+}
+
+.sample {
+  padding: 15px 0;
+  line-height: 23px;
+}
+
+.target, .parent {
+  margin: 0 0 20px;
+  line-height: 23px;
+}
+
+.target .child {
+  display:block;
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 700;
+  color: rgba(161, 155, 248);
+}
+
+.target.notepad {
+  margin-top: 15px;
+  padding: 5px;
+  border-radius: 3px;
+  border-bottom: 2px solid transparent;
+  background-color: rgba(0,0,0,.1);
+}
+
+.target.notepad[contenteditable='true'] {
+  background-color: transparent;
+  border-radius: 0;
+  border-bottom-color: rgb(235, 123, 123);
+}
+
+.red {
+  color: #f00;
+}
+
+.pre {
+  padding: 10px;
+  background-color: rgba(0,0,0,.1)
+}
+
+.code {
+  display:block;
+  font-size: 13px;
+  line-height: 19px;
+  white-space: pre-wrap;
+  text-indent: 14px;
+}
+
+.code-highlight {
+  padding: 2px 4px;
+  border-radius: 4px;
+  background-color:rgba(161, 155, 248, 0.575);
+}

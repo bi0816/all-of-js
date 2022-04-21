@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mutation Observer API 에 대해</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <h1 class="title">Mutation Observer API</h1>
+  <div class="container">
+    <h2 class="sub-title">&middot; attributes</h2>
+    <p class="desc">
+      개발자도구를 통해 [MutationRecord] 를 확인할 수 있습니다.
+    </p>
+    <hr />
+    <div class="sample is-active" data-option="attributes">
+      <p class="target">
+        아래 버튼을 누르면 <span class="code-highlight">.red</span> 클래스가 토글됩니다.<br>
+        이 옵션은 타겟의 attribute 속성이 변경될 때 사용합니다.
+      </p>
+      <button type="button" class="btn">Click</button>
+    </div>
+    <div class="sample is-hide" data-option="childList">
+      <p class="target">
+        버튼을 누르면 자식 요소인 <span class="code-highlight">span.child</span> 를 추가 및 제거할 수 있습니다.<br>
+        이 옵션은 타겟에 자식 요소를 추가 및 제거할 때 사용합니다.<br>
+        자식 요소에는 텍스트 노드도 포함됩니다.
+      </p>
+      <button type="button" class="btn btn-add">Add Child</button>
+      <button type="button" class="btn btn-remove">Remove Child</button>
+    </div>
+    <div class="sample is-hide" data-option="characterData">
+      [확인 방법]<br>
+      1. 'Start Observation' 버튼을 클릭 후 텍스트를 수정할 수 있고, Observer 가 관찰을 시작합니다.<br>
+      2. 'Stop Observation' 버튼을 클릭하면 텍스트는 계속 수정할 수 있지만 관찰이 중지됩니다.<br>
+      이 옵션은 타겟의 데이터가 변경될 때를 감지할 수 있습니다.<br>
+      이 예제에서는 characterData, characterDataOldValue 값을 확인할 수 있습니다.
+      <p class="target notepad">Please write something...</p>
+      <button type="button" class="btn btn-start">Start Observation</button>
+      <button type="button" class="btn btn-stop">Stop Observation</button>
+    </div>
+    <div class="sample is-hide" data-option="subtree">
+      <div class="target">
+        버튼을 누르면 input 속성이 변경됩니다.<br>
+        이 옵션은 단독으로 사용할 수 없습니다.<br>
+        MutationObserver는 반드시 childList, attributes, characterData 중 1개가 설정되어 있어야 합니다.<br>
+        이 예제에서는 attributes, attributeOldValue 값을 같이 확인할 수 있습니다.
+        <span class="input-box">
+          <input type="date" class="input">
+        </span>
+      </div>
+      <button type="button" class="btn">Click</button>
+    </div>
+  </div>
+  <div class="input-group">
+    <span class="input-box">
+      <input type="radio" id="attributes" name="value-group" checked>
+      <label for="attributes">attributes</label>
+    </span>
+    <span class="input-box">
+      <input type="radio" id="childList" name="value-group">
+      <label for="childList">childList</label>
+    </span>
+    <span class="input-box">
+      <input type="radio" id="characterData" name="value-group">
+      <label for="characterData">characterData</label>
+    </span>
+    <span class="input-box">
+      <input type="radio" id="subtree" name="value-group">
+      <label for="subtree">subtree</label>
+    </span>
+  </div>
+  <hr />
+  <div class="code-box">
+    <em class="title">Code Box (HTML)</em>
+  <pre class="pre">
+  <code class="code" id="htmlCode"></code>
+  </pre>
+  </div>
+</div>
+
+<!-- Script -->
+<script>
+(()=>{
+  const title = document.querySelector('.sub-title');
+  const input = document.querySelectorAll('input[type="radio"]');
+  const sample = document.querySelectorAll('.sample');
+  const btn = document.querySelectorAll('.btn');
+  const code = document.querySelector('.code');
+
+  const CLASSNAME = {
+    HIDE: 'is-hide',
+    ACTIVE: 'is-active',
+    ADD: 'btn-add',
+    START: 'btn-start',
+    STOP: 'btn-stop',
+    TARGET: 'target',
+    CHILD: 'child'
+  }
+
+  const observer = new MutationObserver (function(mutations) {
+    console.log(mutations);
+  });
+
+  function stopObservation() {
+    observer.disconnect();
+  }
+
+  function startObservation(target, option) {
+    const optionObject = new Object();
+
+    switch (option) {
+      case 'characterData':
+        optionObject.characterData = 'true';
+        optionObject.subtree = 'true';
+        optionObject.characterDataOldValue = 'true';
+        break;
+      case 'subtree':
+        optionObject.attributes = 'true';
+        optionObject.subtree = 'true';
+        optionObject.attributeOldValue = 'true';
+        break;
+      default:
+        optionObject[`${option}`] = true;
+        break;
+    }
+
+    observer.observe(target, optionObject);
+  }
+
+  function findElement(arrayName, className) {
+    return Array.from(arrayName).find(item => item.classList.contains(className));
+  }
+
+  function initCode() {
+    let initTarget = findElement(sample, CLASSNAME.ACTIVE);
+    const initOption = initTarget.dataset.option;
+    initTarget = findElement(initTarget.children, CLASSNAME.TARGET);
+    showCode(initTarget.outerHTML);
+    startObservation(initTarget, initOption);
+  }
+
+  function activeSample(targetId) {
+    let target, child;
+    sample.forEach((item) => {
+      item.classList.add(CLASSNAME.HIDE);
+      item.classList.remove(CLASSNAME.ACTIVE);
+    })
+
+    Array.from(sample).filter((item) => {
+      if (targetId === item.dataset.option) {
+        target = item;
+        item.classList.remove(CLASSNAME.HIDE);
+        item.classList.add(CLASSNAME.ACTIVE);
+      }
+    });
+
+    child = findElement(target.children, CLASSNAME.TARGET);
+    showCode(child.outerHTML);
+  }
+
+  function showCode(contents) {
+    code.innerText = contents;
+  }
+
+  function createElement() {
+    const element = document.createElement('span');
+    element.classList.add('child');
+    element.innerHTML = "I'm child";
+    return element;
+  }
+
+  function handleInput(e) {
+    const targetId = e.target.id;
+    title.innerHTML = `&middot; ${targetId}`;
+    activeSample(targetId);
+  }
+
+  function handleBtn(e) {
+    let target, code, child;
+    const btnTarget = e.target;
+    const parent = btnTarget.parentElement;
+    const parentOption = parent.dataset.option;
+    target = findElement(parent.children, CLASSNAME.TARGET);
+
+    function inputCode(target) {
+      code = target.outerHTML;
+      showCode(code);
+    }
+
+    switch (parentOption) {
+      case 'attributes':
+        startObservation(target, parentOption);
+        target.classList.toggle('red');
+        inputCode(target);
+        break;
+      case 'childList':
+        startObservation(target, parentOption);
+        if (btnTarget.classList.contains(CLASSNAME.ADD)) {
+          child = createElement();
+          target.append(child);
+        } else {
+          child = findElement(target.children, CLASSNAME.CHILD);
+          (child !== undefined) ? target.removeChild(child) : null;
+        }
+        inputCode(target);
+        break;
+      case 'characterData':
+        startObservation(target, parentOption);
+        if (btnTarget.classList.contains(CLASSNAME.START)) {
+          target.innerText = '';
+          target.setAttribute('contenteditable', 'true');
+        } else {
+          stopObservation();
+        }
+        inputCode(target);
+        break;
+      case 'subtree':
+        startObservation(target, parentOption);
+        child = findElement(target.children, 'input-box');
+        child = child.children[0];
+        (child.type === 'date') ? child.type = 'number' : child.type = 'date';
+        inputCode(target);
+        break;
+    }
+  }
+
+  initCode();
+
+  Array.from(input).forEach((item)=>{ item.addEventListener('click', handleInput) });
+  Array.from(btn).forEach((item)=>{ item.addEventListener('click', handleBtn) });
+})();
+</script>
+</body>
+</html>
